@@ -110,6 +110,12 @@ export function LandingPage() {
           </div>
         </Link>
       </section>
+      <footer className="border-t bg-card/40">
+          <div className="mx-auto max-w-6xl px-4 py-5 text-center text-xs text-muted-foreground">
+            Made with <span aria-label="love" role="img">❤️</span> by{' '}
+            <span className="font-medium text-foreground">Chandana Veeturi</span> from India
+          </div>
+        </footer>
     </div>
   )
 }
