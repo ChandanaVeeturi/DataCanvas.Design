@@ -74,7 +74,7 @@ export function Header() {
           <Settings className="h-4 w-4" />
         </NavLink>
         <a
-          href="https://github.com"
+          href="https://github.com/ChandanaVeeturi/DataCanvas.Design"
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub"
