@@ -149,11 +149,18 @@ export function ChartBuilder({ dataset, initialSpec, onSave, onCancel }: ChartBu
 
             <div className="space-y-2 border-t pt-4">
               <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Display</p>
-              {(spec.type === 'bar' || spec.type === 'area' || spec.type === 'line') && (
+              {(spec.type === 'bar' || spec.type === 'area' || spec.type === 'line' || spec.type === 'rose') && (
                 <ToggleRow
                   label="Stacked"
                   checked={!!spec.options.stacked}
                   onChange={(v) => updateOptions({ stacked: v })}
+                />
+              )}
+              {spec.type === 'funnel' && (
+                <ToggleRow
+                  label="Ascending (narrow at top)"
+                  checked={!!spec.options.ascending}
+                  onChange={(v) => updateOptions({ ascending: v })}
                 />
               )}
               {spec.type === 'bar' && (
