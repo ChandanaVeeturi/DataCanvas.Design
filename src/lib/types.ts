@@ -34,6 +34,14 @@ export type ChartType =
   | 'heatmap'
   | 'treemap'
   | 'radar'
+  | 'funnel'
+  | 'gauge'
+  | 'sankey'
+  | 'sunburst'
+  | 'waterfall'
+  | 'calendar'
+  | 'rose'
+  | 'stream'
 
 export type Aggregator = 'sum' | 'avg' | 'count' | 'min' | 'max' | 'median' | 'none'
 
@@ -60,6 +68,7 @@ export interface ChartSpec {
     showLegend?: boolean
     showGrid?: boolean
     logScale?: boolean
+    ascending?: boolean
   }
   createdAt: number
 }

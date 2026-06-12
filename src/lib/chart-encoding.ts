@@ -87,6 +87,57 @@ export function encodingLayoutFor(type: ChartType, cols: Column[]): EncodingLayo
         x: { label: 'Group (category)', opts: cats },
         agg: true,
       }
+    case 'funnel':
+      return {
+        x: { label: 'Stage (category)', opts: cats.length ? cats : all },
+        y: { label: 'Value (optional)', opts: numeric },
+        agg: true,
+      }
+    case 'gauge':
+      return {
+        y: { label: 'Value column', opts: numeric },
+        agg: true,
+      }
+    case 'sankey':
+      return {
+        x: { label: 'Source', opts: cats.length ? cats : all },
+        series: { label: 'Target', opts: cats.length ? cats : all },
+        y: { label: 'Flow value (optional)', opts: numeric },
+        agg: true,
+      }
+    case 'sunburst':
+      return {
+        x: { label: 'Leaf (category)', opts: cats.length ? cats : all },
+        y: { label: 'Value (optional)', opts: numeric },
+        series: { label: 'Group / parent (optional)', opts: cats },
+        agg: true,
+      }
+    case 'waterfall':
+      return {
+        x: { label: 'Category (X)', opts: cats.length ? cats : all },
+        y: { label: 'Value (Y)', opts: numeric },
+        agg: true,
+      }
+    case 'calendar':
+      return {
+        x: { label: 'Date column', opts: ordered },
+        y: { label: 'Value (optional)', opts: numeric },
+        agg: true,
+      }
+    case 'rose':
+      return {
+        x: { label: 'Category', opts: cats.length ? cats : all },
+        y: { label: 'Value (optional)', opts: numeric },
+        series: { label: 'Group / color (optional)', opts: cats },
+        agg: true,
+      }
+    case 'stream':
+      return {
+        x: { label: 'Time / X axis', opts: ordered },
+        series: { label: 'Stream (series)', opts: cats.length ? cats : all },
+        y: { label: 'Value (optional)', opts: numeric },
+        agg: true,
+      }
     default:
       return {}
   }

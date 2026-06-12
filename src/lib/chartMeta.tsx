@@ -299,6 +299,206 @@ export const CHART_TYPES: ChartMeta[] = [
     suggestedDataset: 'iris',
     category: 'relationship',
   },
+  {
+    type: 'funnel',
+    label: 'Funnel',
+    description: 'Stage-by-stage drop-off',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <polygon points="6,2 42,2 36,11 12,11" opacity="0.85" />
+        <polygon points="12,13 36,13 30,22 18,22" opacity="0.65" />
+        <polygon points="18,24 30,24 26,30 22,30" opacity="0.45" />
+      </svg>
+    ),
+    whenToUse:
+      'Show conversion or drop-off across a sequence of stages (e.g. marketing funnel, pipeline). Each step is proportionally sized.',
+    bestFor: ['Conversion funnels', 'Pipeline stages', 'Sequential drop-off'],
+    encodings: 'Stage = category, Value = numeric (optional — defaults to count).',
+    pitfalls: [
+      'Stages should be ordered logically — funnel implies a sequence.',
+      'If stages are not related, a bar chart makes comparison easier.',
+    ],
+    suggestedDataset: 'sales-demo',
+    category: 'compare',
+  },
+  {
+    type: 'gauge',
+    label: 'Gauge',
+    description: 'Single KPI dial',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="none" stroke={stroke} strokeWidth="1.5">
+        <path d="M6,28 A18,18 0 0,1 42,28" strokeWidth="5" opacity="0.18" />
+        <path d="M6,28 A18,18 0 0,1 34,12" strokeWidth="5" opacity="0.85" />
+        <line x1="24" y1="28" x2="33" y2="13" strokeWidth="2" />
+        <circle cx="24" cy="28" r="2.5" fill="currentColor" />
+      </svg>
+    ),
+    whenToUse:
+      'Display a single aggregated metric against a scale — ideal for KPI dashboards and progress toward a target.',
+    bestFor: ['KPI display', 'Progress toward target', 'Single metric summary'],
+    encodings: 'Value = numeric column (aggregated to one number).',
+    pitfalls: [
+      'Gauges encode one number — use a bar chart if comparing multiple values.',
+      'The max scale is auto-set; meaningful only when users know the expected range.',
+    ],
+    suggestedDataset: 'sales-demo',
+    category: 'compare',
+  },
+  {
+    type: 'sankey',
+    label: 'Sankey',
+    description: 'Flow between categories',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <rect x="2" y="2" width="5" height="11" opacity="0.85" />
+        <rect x="2" y="15" width="5" height="15" opacity="0.55" />
+        <rect x="41" y="3" width="5" height="6" opacity="0.85" />
+        <rect x="41" y="11" width="5" height="8" opacity="0.65" />
+        <rect x="41" y="21" width="5" height="9" opacity="0.45" />
+        <path d="M7,2 C24,2 24,3 41,3 L41,9 C24,9 24,13 7,13 Z" opacity="0.3" />
+        <path d="M7,15 C24,13 24,11 41,11 L41,19 C24,19 24,20 7,20 Z" opacity="0.25" />
+        <path d="M7,22 C24,22 24,21 41,21 L41,30 C24,30 24,30 7,30 Z" opacity="0.2" />
+      </svg>
+    ),
+    whenToUse:
+      'Show how values flow and redistribute between two sets of categories. Great for tracking where things come from and where they go.',
+    bestFor: ['Source-to-destination flows', 'Budget allocation', 'User journey paths'],
+    encodings: 'Source = category, Target = category, Value = numeric (optional — defaults to count).',
+    pitfalls: [
+      'Too many unique sources/targets create spaghetti — filter to top-N nodes.',
+      'Sankey implies directional flow; avoid for symmetric relationships.',
+    ],
+    suggestedDataset: 'titanic',
+    category: 'relationship',
+  },
+  {
+    type: 'sunburst',
+    label: 'Sunburst',
+    description: 'Radial hierarchy',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <circle cx="24" cy="16" r="4" opacity="0.9" />
+        <path d="M24,16 L24,8 A8,8 0 0,1 31,20 Z" opacity="0.7" />
+        <path d="M24,16 L31,20 A8,8 0 0,1 17,24 Z" opacity="0.5" />
+        <path d="M24,16 L17,24 A8,8 0 0,1 24,8 Z" opacity="0.35" />
+        <path d="M24,3 A13,13 0 0,1 37,16" fill="none" stroke="currentColor" strokeWidth="4.5" opacity="0.8" />
+        <path d="M37,16 A13,13 0 0,1 24,29" fill="none" stroke="currentColor" strokeWidth="4.5" opacity="0.55" />
+        <path d="M24,29 A13,13 0 0,1 11,16" fill="none" stroke="currentColor" strokeWidth="4.5" opacity="0.35" />
+        <path d="M11,16 A13,13 0 0,1 24,3" fill="none" stroke="currentColor" strokeWidth="4.5" opacity="0.2" />
+      </svg>
+    ),
+    whenToUse:
+      'A radial treemap — shows hierarchical part-to-whole relationships in a drill-down ring layout. Easier to explore than a treemap for deeply nested data.',
+    bestFor: ['Hierarchical composition', 'Drill-down breakdowns', 'Multi-level categories'],
+    encodings: 'Leaf = category, Value = numeric, optional Group = parent ring.',
+    pitfalls: [
+      'Outer rings become unreadable with many leaves — limit depth or filter.',
+      'Less intuitive to casual audiences than a treemap.',
+    ],
+    suggestedDataset: 'sales-demo',
+    category: 'composition',
+  },
+  {
+    type: 'waterfall',
+    label: 'Waterfall',
+    description: 'Cumulative changes',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <rect x="3" y="20" width="6" height="8" opacity="0.85" />
+        <rect x="12" y="14" width="6" height="6" opacity="0.7" />
+        <rect x="21" y="18" width="6" height="4" opacity="0.4" />
+        <rect x="30" y="10" width="6" height="8" opacity="0.7" />
+        <rect x="39" y="10" width="6" height="20" opacity="0.85" />
+      </svg>
+    ),
+    whenToUse:
+      'Visualise how a starting value is built up or reduced through a series of gains and losses. Classic for financial P&L, budget variance, or cohort changes.',
+    bestFor: ['P&L / variance analysis', 'Budget bridges', 'Gain & loss breakdown'],
+    encodings: 'X = category (steps), Y = numeric value (positive = gain, negative = loss).',
+    pitfalls: [
+      'Requires ordered categories — reordering changes the running total.',
+      'Negative values appear as "drops"; ensure the audience understands the floating bar.',
+    ],
+    suggestedDataset: 'sales-demo',
+    category: 'compare',
+  },
+  {
+    type: 'calendar',
+    label: 'Calendar',
+    description: 'Daily activity heatmap',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((col) =>
+          [0, 1, 2, 3].map((row) => (
+            <rect
+              key={`${col}-${row}`}
+              x={2 + col * 5.6}
+              y={2 + row * 7}
+              width="4.5"
+              height="6"
+              opacity={0.08 + ((col * 4 + row + col) % 9) * 0.1}
+              rx="0.5"
+            />
+          )),
+        )}
+      </svg>
+    ),
+    whenToUse:
+      'Plot daily values across a calendar grid to reveal weekly, monthly, or seasonal patterns — the GitHub-style contribution chart.',
+    bestFor: ['Daily activity patterns', 'Seasonal trends', 'Anomaly detection over time'],
+    encodings: 'Date = date column, Value = numeric (optional — defaults to count per day).',
+    pitfalls: [
+      'Requires date data with enough density — sparse dates look mostly empty.',
+      'Color perception is approximate; use for patterns, not precise values.',
+    ],
+    suggestedDataset: 'nyc-taxi',
+    category: 'trend',
+  },
+  {
+    type: 'rose',
+    label: 'Rose',
+    description: 'Polar bar chart',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <path d="M24,16 L24,4 A12,12 0 0,1 34,22 Z" opacity="0.85" />
+        <path d="M24,16 L34,22 A8,8 0 0,1 16,26 Z" opacity="0.65" />
+        <path d="M24,16 L16,26 A11,11 0 0,1 13,8 Z" opacity="0.5" />
+        <path d="M24,16 L13,8 A6,6 0 0,1 24,4 Z" opacity="0.35" />
+      </svg>
+    ),
+    whenToUse:
+      'A bar chart wrapped into a polar coordinate system — the "Nightingale rose". Visually striking for cyclical or directional categories (months, compass points, hours).',
+    bestFor: ['Cyclical comparisons', 'Directional data', 'Visually engaging dashboards'],
+    encodings: 'Category = angle axis, Value = radius, optional Series for grouped/stacked rings.',
+    pitfalls: [
+      'Outer sectors appear visually larger due to radius² effect — use sparingly for precise comparison.',
+      'Works best with naturally cyclical categories; arbitrary categories are misleading.',
+    ],
+    suggestedDataset: 'sales-demo',
+    category: 'compare',
+  },
+  {
+    type: 'stream',
+    label: 'Stream',
+    description: 'Flowing area over time',
+    preview: (
+      <svg viewBox="0 0 48 32" fill="currentColor">
+        <path d="M2,10 Q16,6 24,8 Q32,10 46,6 L46,14 Q32,18 24,16 Q16,14 2,18 Z" opacity="0.7" />
+        <path d="M2,18 Q16,14 24,16 Q32,18 46,14 L46,22 Q32,26 24,24 Q16,22 2,26 Z" opacity="0.5" />
+        <path d="M2,26 Q16,22 24,24 Q32,26 46,22 L46,30 Q32,30 24,30 Q16,30 2,30 Z" opacity="0.35" />
+      </svg>
+    ),
+    whenToUse:
+      'Show how multiple streams evolve and compare over time in a flowing, organic shape. Good for topic trends, genre popularity, or user cohorts across periods.',
+    bestFor: ['Multi-stream time trends', 'Topic/category evolution', 'Proportional flow over time'],
+    encodings: 'X = time/ordered axis, Series = stream category, Value = numeric (optional — defaults to count).',
+    pitfalls: [
+      'Hard to read precise values — use a stacked area chart when exact numbers matter.',
+      'Requires time data; works poorly with categorical X axes.',
+    ],
+    suggestedDataset: 'nyc-taxi',
+    category: 'trend',
+  },
 ]
 
 export const CATEGORIES: { id: ChartMeta['category']; label: string; description: string }[] = [
