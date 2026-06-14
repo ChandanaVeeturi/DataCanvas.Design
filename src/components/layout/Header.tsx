@@ -1,89 +1,93 @@
-import { Link, NavLink } from 'react-router-dom'
-import { BookOpen, Github, Search, Settings, Sparkles } from 'lucide-react'
-import { ThemeToggle } from './ThemeToggle'
-import { usePaletteStore } from '@/stores/palette.store'
+'use client'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { Menu, X, BarChart3 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { NAV_LINKS } from './navigation'
+import { ThemeToggle } from './theme-toggle'
 
 export function Header() {
-  const openPalette = usePaletteStore((s) => s.toggle)
+  const pathname = usePathname()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-md">
-      <div className="flex items-center gap-6">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-primary to-accent text-primary-foreground">
-            <Sparkles className="h-4 w-4" strokeWidth={2.5} />
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-sm">
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg shrink-0">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+            <BarChart3 className="h-4 w-4 text-primary-foreground" />
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-tight">DataCanvas</span>
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-              Browser studio
-            </span>
-          </div>
+          <span className="hidden sm:inline">
+            DataCanvas<span className="text-primary">.</span>Design
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 sm:flex">
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-              cn(
-                'rounded-md px-2.5 py-1.5 text-sm transition-colors',
-                isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-              )
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/gallery"
-            className={({ isActive }) =>
-              cn(
-                'inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors',
-                isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-              )
-            }
-          >
-            <BookOpen className="h-3.5 w-3.5" />
-            Chart library
-          </NavLink>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(link.href + '/')
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'px-3 py-1.5 text-sm font-medium rounded-lg transition-colors duration-150',
+                  isActive
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary',
+                )}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
+
+        {/* Right actions */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="/wizard"
+            className="hidden sm:inline-flex h-9 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-150"
+          >
+            Find My Chart →
+          </Link>
+          <button
+            className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-secondary"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
-      <div className="flex items-center gap-1">
-        <button
-          type="button"
-          onClick={openPalette}
-          className="hidden h-8 items-center gap-2 rounded-md border border-input bg-background px-2.5 text-xs text-muted-foreground transition-colors hover:bg-accent/10 hover:text-foreground sm:inline-flex"
-          aria-label="Open command palette"
-        >
-          <Search className="h-3 w-3" />
-          <span>Search…</span>
-          <kbd className="rounded border bg-muted px-1 py-0.5 text-[10px] font-medium">⌘K</kbd>
-        </button>
-        <NavLink
-          to="/settings"
-          aria-label="Settings"
-          className={({ isActive }) =>
-            cn(
-              'inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/10 hover:text-foreground',
-              isActive && 'text-foreground',
-            )
-          }
-        >
-          <Settings className="h-4 w-4" />
-        </NavLink>
-        <a
-          href="https://github.com/ChandanaVeeturi/DataCanvas.Design"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent/10 hover:text-foreground"
-        >
-          <Github className="h-4 w-4" />
-        </a>
-        <ThemeToggle />
-      </div>
+      {/* Mobile nav */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-border bg-background animate-fade-in">
+          <nav className="container flex flex-col gap-1 py-4">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-secondary transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/wizard"
+              onClick={() => setMobileOpen(false)}
+              className="mt-2 h-9 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
+            >
+              Find My Chart →
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

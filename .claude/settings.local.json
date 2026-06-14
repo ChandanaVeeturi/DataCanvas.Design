@@ -5,7 +5,20 @@
       "Bash(npm run *)",
       "Bash(npm audit *)",
       "Bash(npm ls *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(dir /s \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\")",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\data\\\\charts\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\data\\\\datasets\")",
+      "Bash(Write-Output \"Directories created\")",
+      "PowerShell(New-Item *)",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\components\\\\layout\\\\header.tsx\" -ItemType File -Force)",
+      "Bash(Write-Output \"created\")",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\components\\\\layout\\\\footer.tsx\" -ItemType File -Force)",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\app\" -ItemType Directory -Force)",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\app\\\\layout.tsx\" -ItemType File -Force)",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\lenovo\\\\desktop\\\\DataCanvas.Design\\\\src\\\\app\\\\not-found.tsx\" -ItemType File -Force)",
+      "Bash(npx playwright *)"
     ]
   }
 }
