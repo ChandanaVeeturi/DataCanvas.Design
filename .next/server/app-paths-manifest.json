@@ -1,9 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/charts/page": "app/charts/page.js",
-  "/charts/[category]/[slug]/page": "app/charts/[category]/[slug]/page.js",
-  "/wizard/page": "app/wizard/page.js",
-  "/playground/page": "app/playground/page.js",
-  "/datasets/page": "app/datasets/page.js",
-  "/dashboards/page": "app/dashboards/page.js"
-}
