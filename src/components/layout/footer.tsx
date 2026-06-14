@@ -72,7 +72,7 @@ export function Footer() {
             © {new Date().getFullYear()} DataCanvas.Design. Built for data storytellers everywhere.
           </p>
           <p className="text-xs text-muted-foreground">
-            Best chart for comparison · Best chart for trends · Data visualization examples
+            Made with ❤️ by Chandana Veeturi from India 🇮🇳
           </p>
         </div>
       </div>
